@@ -1,9 +1,27 @@
+import { useRef, useEffect } from "react";
+
 const WORD = ["V", "A", "N", "I", "L", "L", "A"];
 
 export default function App() {
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const el = audioRef.current;
+    if (el) {
+      el.volume = 0.2;
+      el.play().catch(() => {
+        const handler = () => {
+          el.play();
+          document.removeEventListener("click", handler);
+        };
+        document.addEventListener("click", handler);
+      });
+    }
+  }, []);
+
   return (
     <>
-      <audio src="/sound.mp3" autoPlay loop volume={0.2} />
+      <audio ref={audioRef} src="/sound.mp3" loop />
       <div className="screen">
       <main className="stage">
         <div className="word-stage" aria-label="VANILLA">
