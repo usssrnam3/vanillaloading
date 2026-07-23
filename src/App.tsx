@@ -2,7 +2,9 @@ const WORD = ["V", "A", "N", "I", "L", "L", "A"];
 
 export default function App() {
   return (
-    <div className="screen">
+    <>
+      <audio src="/sound.mp3" autoPlay loop volume={0.2} />
+      <div className="screen">
       <main className="stage">
         <div className="word-stage" aria-label="VANILLA">
           {WORD.map((ch, i) => (
@@ -22,5 +24,6 @@ export default function App() {
         </div>
       </main>
     </div>
+    </>
   );
 }
