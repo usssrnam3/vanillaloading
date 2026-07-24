@@ -38,7 +38,6 @@ export default function App() {
               </span>
             </span>
           ))}
-          <span className="jumping-plus" aria-hidden="true">+</span>
         </div>
       </main>
     </div>
