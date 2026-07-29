@@ -12,14 +12,18 @@ export default function App() {
 
     el.volume = 0.08;
 
+    const pick = () => SONGS[Math.floor(Math.random() * SONGS.length)];
+
     const playNext = () => {
-      const src = SONGS[Math.floor(Math.random() * SONGS.length)];
-      el.src = src;
+      el.src = pick();
+      el.load();
       el.play();
     };
 
     el.addEventListener("ended", playNext);
 
+    el.src = pick();
+    el.load();
     el.play().catch(() => {
       const handler = () => {
         el.play();
@@ -33,7 +37,7 @@ export default function App() {
 
   return (
     <>
-      <audio ref={audioRef} src={SONGS[0]} />
+      <audio ref={audioRef} />
       <div className="screen">
       <main className="stage">
         <div className="word-stage" aria-label="VANILLA">
