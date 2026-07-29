@@ -1,27 +1,39 @@
 import { useRef, useEffect } from "react";
 
 const WORD = ["V", "A", "N", "I", "L", "L", "A"];
+const SONGS = ["/sound.mp3", "/sound2.mp3"];
 
 export default function App() {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     const el = audioRef.current;
-    if (el) {
-      el.volume = 0.2;
-      el.play().catch(() => {
-        const handler = () => {
-          el.play();
-          document.removeEventListener("click", handler);
-        };
-        document.addEventListener("click", handler);
-      });
-    }
+    if (!el) return;
+
+    el.volume = 0.08;
+
+    const playNext = () => {
+      const src = SONGS[Math.floor(Math.random() * SONGS.length)];
+      el.src = src;
+      el.play();
+    };
+
+    el.addEventListener("ended", playNext);
+
+    el.play().catch(() => {
+      const handler = () => {
+        el.play();
+        document.removeEventListener("click", handler);
+      };
+      document.addEventListener("click", handler);
+    });
+
+    return () => el.removeEventListener("ended", playNext);
   }, []);
 
   return (
     <>
-      <audio ref={audioRef} src="/sound.mp3" loop />
+      <audio ref={audioRef} src={SONGS[0]} />
       <div className="screen">
       <main className="stage">
         <div className="word-stage" aria-label="VANILLA">
