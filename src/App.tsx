@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 
 const VIDEOS = [
-  { src: "/ural1.mp4" },
-  { src: "/ural2.mp4" },
-  { src: "/ural3.mp4" },
+  { src: "ural1.mp4" },
+  { src: "ural2.mp4" },
+  { src: "ural3.mp4" },
 ];
 
 export default function App() {
@@ -55,7 +55,10 @@ export default function App() {
             ref={videoRef}
             src={v.src}
             controls
+            autoPlay
+            muted
             playsInline
+            preload="auto"
             className="video-player"
           />
         </div>
