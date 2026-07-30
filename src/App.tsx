@@ -1,17 +1,33 @@
-import { useState, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 const VIDEOS = [
-  { oid: "-19232159", id: "456250614", hash: "697e12a3dea65677" },
-  { oid: "-19232159", id: "456250613", hash: "381709a0d0a35e84" },
-  { oid: "-19232159", id: "456250605", hash: "ca72ad1d5a8a0c8f" },
+  { src: "/ural1.mp4" },
+  { src: "/ural2.mp4" },
+  { src: "/ural3.mp4" },
 ];
 
 export default function App() {
   const [index, setIndex] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const next = useCallback(() => {
     setIndex((i) => (i + 1 < VIDEOS.length ? i + 1 : 0));
   }, []);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.load();
+    el.play();
+  }, [index]);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const handler = () => next();
+    el.addEventListener("ended", handler);
+    return () => el.removeEventListener("ended", handler);
+  }, [next]);
 
   const v = VIDEOS[index];
 
@@ -35,13 +51,12 @@ export default function App() {
         </div>
 
         <div className="video-wrapper" key={index}>
-          <iframe
-            src={`https://vk.com/video_ext.php?oid=${v.oid}&id=${v.id}&hash=${v.hash}&hd=2&autoplay=1`}
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            allowFullScreen
-            allow="autoplay"
+          <video
+            ref={videoRef}
+            src={v.src}
+            controls
+            playsInline
+            className="video-player"
           />
         </div>
 
