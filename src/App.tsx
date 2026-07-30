@@ -1,47 +1,25 @@
-import { useRef, useEffect } from "react";
+import { useState, useCallback } from "react";
 
-const WORD = ["V", "A", "N", "I", "L", "L", "A"];
-const SONGS = ["/sound.mp3", "/sound2.mp3"];
+const VIDEOS = [
+  { oid: "-19232159", id: "456250614", hash: "697e12a3dea65677" },
+  { oid: "-19232159", id: "456250613", hash: "381709a0d0a35e84" },
+  { oid: "-19232159", id: "456250605", hash: "ca72ad1d5a8a0c8f" },
+];
 
 export default function App() {
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const [index, setIndex] = useState(0);
 
-  useEffect(() => {
-    const el = audioRef.current;
-    if (!el) return;
-
-    el.volume = 0.08;
-
-    const pick = () => SONGS[Math.floor(Math.random() * SONGS.length)];
-
-    const playNext = () => {
-      el.src = pick();
-      el.load();
-      el.play();
-    };
-
-    el.addEventListener("ended", playNext);
-
-    el.src = pick();
-    el.load();
-    el.play().catch(() => {
-      const handler = () => {
-        el.play();
-        document.removeEventListener("click", handler);
-      };
-      document.addEventListener("click", handler);
-    });
-
-    return () => el.removeEventListener("ended", playNext);
+  const next = useCallback(() => {
+    setIndex((i) => (i + 1 < VIDEOS.length ? i + 1 : 0));
   }, []);
 
+  const v = VIDEOS[index];
+
   return (
-    <>
-      <audio ref={audioRef} />
-      <div className="screen">
+    <div className="screen">
       <main className="stage">
         <div className="word-stage" aria-label="VANILLA">
-          {WORD.map((ch, i) => (
+          {["V", "A", "N", "I", "L", "L", "A"].map((ch, i) => (
             <span
               className={`letter-cell ${i % 2 === 0 ? "up" : "down"}`}
               key={i}
@@ -55,8 +33,27 @@ export default function App() {
             </span>
           ))}
         </div>
+
+        <div className="video-wrapper" key={index}>
+          <iframe
+            src={`https://vk.com/video_ext.php?oid=${v.oid}&id=${v.id}&hash=${v.hash}&hd=2&autoplay=1`}
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            allowFullScreen
+            allow="autoplay"
+          />
+        </div>
+
+        <div className="playlist-bar">
+          <span className="playlist-info">
+            {index + 1} / {VIDEOS.length}
+          </span>
+          <button className="playlist-btn" onClick={next}>
+            {index + 1 < VIDEOS.length ? "Далее →" : "Заново ↻"}
+          </button>
+        </div>
       </main>
     </div>
-    </>
   );
 }
