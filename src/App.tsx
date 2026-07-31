@@ -1,4 +1,24 @@
+import { useRef, useEffect } from "react";
+
 export default function App() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+
+    el.muted = true;
+    el.autoplay = true;
+    el.loop = true;
+    el.play().catch(() => {
+      const handler = () => {
+        el.play();
+        document.removeEventListener("click", handler);
+      };
+      document.addEventListener("click", handler);
+    });
+  }, []);
+
   return (
     <div className="screen">
       <main className="stage">
@@ -20,7 +40,11 @@ export default function App() {
 
         <div className="video-wrapper">
           <video
+            ref={videoRef}
             src="ural1.webm"
+            muted
+            autoPlay
+            loop
             controls
             playsInline
             preload="auto"
