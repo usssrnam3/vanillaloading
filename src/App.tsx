@@ -20,7 +20,7 @@ export default function App() {
 
         <div className="video-wrapper">
           <video
-            src="ural1.mp4"
+            src="ural1.webm"
             controls
             playsInline
             preload="auto"
