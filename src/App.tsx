@@ -17,6 +17,15 @@ export default function App() {
       };
       document.addEventListener("click", handler);
     });
+
+    const enableSound = () => {
+      el.muted = false;
+      el.volume = 1;
+      document.removeEventListener("click", enableSound);
+      document.removeEventListener("keydown", enableSound);
+    };
+    document.addEventListener("click", enableSound);
+    document.addEventListener("keydown", enableSound);
   }, []);
 
   return (
