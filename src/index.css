@@ -187,38 +187,6 @@ body {
   background: #000;
 }
 
-/* ---------------- Playlist Controls ---------------- */
-.playlist-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  width: 100%;
-}
-
-.playlist-info {
-  font-size: 0.85rem;
-  color: var(--muted);
-  user-select: none;
-}
-
-.playlist-btn {
-  background: none;
-  border: 1px solid var(--muted);
-  color: var(--ink);
-  font-family: inherit;
-  font-size: 0.85rem;
-  padding: 6px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
-}
-
-.playlist-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--ink);
-}
-
 /* ---------------- Reduced motion ---------------- */
 @media (prefers-reduced-motion: reduce) {
   .letter,
