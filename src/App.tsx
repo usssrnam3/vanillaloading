@@ -1,32 +1,18 @@
-import { useRef, useEffect } from "react";
+import { useRef, useState } from "react";
 
 export default function App() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [started, setStarted] = useState(false);
 
-  useEffect(() => {
+  const start = () => {
     const el = videoRef.current;
     if (!el) return;
-
-    el.muted = true;
-    el.autoplay = true;
+    el.muted = false;
+    el.volume = 1;
     el.loop = true;
-    el.play().catch(() => {
-      const handler = () => {
-        el.play();
-        document.removeEventListener("click", handler);
-      };
-      document.addEventListener("click", handler);
-    });
-
-    const enableSound = () => {
-      el.muted = false;
-      el.volume = 1;
-      document.removeEventListener("click", enableSound);
-      document.removeEventListener("keydown", enableSound);
-    };
-    document.addEventListener("click", enableSound);
-    document.addEventListener("keydown", enableSound);
-  }, []);
+    el.play();
+    setStarted(true);
+  };
 
   return (
     <div className="screen">
@@ -52,7 +38,6 @@ export default function App() {
             ref={videoRef}
             src="ural1.webm"
             muted
-            autoPlay
             loop
             controls
             playsInline
@@ -60,6 +45,12 @@ export default function App() {
             className="video-player"
           />
         </div>
+
+        {!started && (
+          <button className="play-btn" onClick={start}>
+            Включить звук ▶
+          </button>
+        )}
       </main>
     </div>
   );
