@@ -7,10 +7,15 @@ export default function App() {
     const el = videoRef.current;
     if (!el) return;
 
+    el.volume = 1;
     el.loop = true;
+    el.muted = false;
     el.play().catch(() => {
-      el.muted = true;
-      el.play();
+      const retry = () => {
+        el.muted = false;
+        el.play();
+      };
+      setTimeout(retry, 1000);
     });
   }, []);
 
@@ -37,7 +42,6 @@ export default function App() {
           <video
             ref={videoRef}
             src="ural1.webm"
-            muted
             loop
             playsInline
             preload="auto"
