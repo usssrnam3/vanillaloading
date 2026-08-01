@@ -18,13 +18,15 @@ export default function App() {
   }, []);
 
   return (
-    <video
-      ref={videoRef}
-      src="main.webm"
-      loop
-      playsInline
-      preload="auto"
-      className="fullscreen-video"
-    />
+    <div className="video-wrap">
+      <video
+        ref={videoRef}
+        src="main.webm"
+        loop
+        playsInline
+        preload="auto"
+        className="fullscreen-video"
+      />
+    </div>
   );
 }
