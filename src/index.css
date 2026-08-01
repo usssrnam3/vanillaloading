@@ -177,6 +177,18 @@ body {
   height: 100%;
   object-fit: cover;
   background: #000;
+  transform: scale(1.12);
+  will-change: transform;
+  animation: cameraSway 45s ease-in-out infinite alternate;
+}
+
+@keyframes cameraSway {
+  0% {
+    transform: scale(1.12) translate(-0.8%, -0.5%);
+  }
+  100% {
+    transform: scale(1.12) translate(0.8%, 0.5%);
+  }
 }
 
 /* ---------------- Reduced motion ---------------- */
@@ -190,5 +202,9 @@ body {
   }
   .letter {
     transform: none !important;
+  }
+  .fullscreen-video {
+    animation: none !important;
+    transform: scale(1.12) !important;
   }
 }
