@@ -9,13 +9,11 @@ export default function App() {
 
     el.volume = 1;
     el.loop = true;
-    el.muted = false;
-    el.play().catch(() => {
-      const retry = () => {
+    el.muted = true;
+    el.play().then(() => {
+      setTimeout(() => {
         el.muted = false;
-        el.play();
-      };
-      setTimeout(retry, 1000);
+      }, 500);
     });
   }, []);
 
