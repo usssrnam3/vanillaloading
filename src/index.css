@@ -179,15 +179,24 @@ body {
   background: #000;
   transform: scale(1.12);
   will-change: transform;
-  animation: cameraSway 45s ease-in-out infinite alternate;
+  animation: cameraSway 90s ease-in-out infinite;
 }
 
 @keyframes cameraSway {
   0% {
-    transform: scale(1.12) translate(-0.8%, -0.5%);
+    transform: scale(1.12) translate(0%, 0%);
+  }
+  25% {
+    transform: scale(1.12) translate(-0.7%, -0.4%);
+  }
+  50% {
+    transform: scale(1.12) translate(0%, 0%);
+  }
+  75% {
+    transform: scale(1.12) translate(0.7%, 0.4%);
   }
   100% {
-    transform: scale(1.12) translate(0.8%, 0.5%);
+    transform: scale(1.12) translate(0%, 0%);
   }
 }
 
